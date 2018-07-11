@@ -1,23 +1,30 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <tabbar></tabbar>
+    <keep-alive>
+      <router-view>
+      </router-view>
+    </keep-alive>
+    <playerBar></playerBar>
   </div>
 </template>
 
 <script>
+// import sidebar from 'components/sidebar/sidebar'
+// import listen from 'components/listen/listen'
+// import watch from 'components/watch/watch'
+// import sing from 'components/sing/sing'
+import tabbar from 'components/tabbar/tabbar'
+
+import playerBar from 'components/playerBar/playerBar'
+
 export default {
-  name: 'App'
+  components: {
+    tabbar,
+    playerBar
+  }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped lang="stylus" rel="stylesheet/stylus">
 </style>
