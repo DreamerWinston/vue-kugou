@@ -4,7 +4,8 @@
       <span class="tab-link">侧边栏</span>
     </router-link>
 
-      <router-link tag="div" class="tab-item" to="/listen">
+     <div class="main">
+        <router-link tag="div" class="tab-item" to="/listen">
         <span class="tab-link">听</span>
       </router-link>
 
@@ -15,6 +16,7 @@
       <router-link tag="div" class="tab-item" to="/sing">
         <span class="tab-link">唱</span>
       </router-link>
+     </div>
 
     <router-link tag="div" class="tab-item" to="/search">
       <span class="tab-link">搜索</span>
@@ -28,20 +30,26 @@ export default {}
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .tabbar
+  padding 0px 10px
   display flex
+  justify-content space-between
   height 44px
   line-height 44px
   font-size 14px
-  background-color #0F79FE
-  .tab-item
-    flex 1
-    text-align center
-    .tab-link
-      padding-bottom 5px
-      color: $color-text-l
-    &.router-link-active
+  background-color #0F99FE
+  color white
+  .main
+    display flex
+    width 225px
+    .tab-item
+      flex 1
+      text-align center
       .tab-link
-        color: $color-theme
-        border-bottom: 2px solid $color-theme
+        padding-bottom 5px
+        color: $color-text-l
+      &.router-link-active
+        .tab-link
+          color: $color-theme
+          border-bottom: 2px solid $color-theme
 
 </style>
