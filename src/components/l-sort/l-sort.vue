@@ -53,13 +53,14 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .mSort
+  background-color white
   height 230px
   width 100%
   .hint
     height 5px
     background-color #E5E5E5
   .function
-    margin 20px 40px
+    margin 20px 15px
     display flex
     justify-content space-between
     .tab-item

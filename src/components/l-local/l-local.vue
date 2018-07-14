@@ -1,44 +1,57 @@
 <template>
   <div class="mLocal">
-     <router-link tag="div" class="tab-item" to="/local">
+     <div tag="div" class="tab-item" to="/local" @click="onclick('local')">
       <div class="icon">
         <img src="./l_local.png" alt="">
       </div>
       <span>本地音乐</span>
       <span>99</span>
-    </router-link>
-    <router-link tag="div" class="tab-item" to="/love">
+    </div>
+    <div tag="div" class="tab-item" to="/love">
       <div class="icon">
         <img src="./l_love.png" alt="">
       </div>
       <span>喜欢·歌单</span>
       <span>217</span>
-    </router-link>
-    <router-link tag="div" class="tab-item" to="/local">
+    </div>
+    <div tag="div" class="tab-item" to="/downloads">
       <div class="icon">
         <img src="./l_downloads.png" alt="">
       </div>
       <span>下载</span>
       <span>199</span>
-    </router-link>
-    <router-link tag="div" class="tab-item" to="/local">
+    </div>
+    <div tag="div" class="tab-item" to="/history">
       <div class="icon">
         <img src="./l_history.png" alt="">
       </div>
       <span>最近</span>
       <span>9999</span>
-    </router-link>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
 
+import Local from '../../components/k-localmusic/k-localmusic'
+
+export default {
+  methods:{
+    onclick(name){
+     this.$router.push({
+       path:`/local`,
+     })
+    }
+  },
+  components:{
+    Local
+  }
 }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .mLocal
+  background-color white
   height 110px
   width 100%
   display flex

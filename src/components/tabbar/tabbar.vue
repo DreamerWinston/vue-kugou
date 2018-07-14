@@ -1,31 +1,47 @@
 <template>
   <div class="tabbar">
-    <router-link tag="div" class="tab-item" to="/sidebar">
-      <span class="tab-link">侧边栏</span>
-    </router-link>
+    <div tag="div" class="tab-item" @click="sideBarControl">
+      <img src="./tab_side_normal.png" alt="">
+    </div>
 
      <div class="main">
         <router-link tag="div" class="tab-item" to="/listen">
-        <span class="tab-link">听</span>
+        <img src="./tab_listen_click.png" alt="">
       </router-link>
 
       <router-link tag="div" class="tab-item" to="/watch">
-        <span class="tab-link">看</span>
+        <img src="./tab_watch_normal.png" alt="">
       </router-link>
 
       <router-link tag="div" class="tab-item" to="/sing">
-        <span class="tab-link">唱</span>
+        <img src="./tab_sing_normal.png" alt="">
       </router-link>
      </div>
 
     <router-link tag="div" class="tab-item" to="/search">
-      <span class="tab-link">搜索</span>
+      <img src="./tab_search_normal.png" alt="">
     </router-link>
   </div>
 </template>
 
 <script>
-export default {}
+import {mapGetters, mapMutations, mapActions} from 'vuex'
+export default {
+  computed: {
+    ...mapGetters([
+        'sideBarOn'
+      ])
+  },
+  methods: {
+    sideBarControl(){
+      this.setSideBarOn(!this.sideBarOn)
+      this.$emit('childMethod')
+    },
+     ...mapMutations({
+        setSideBarOn: 'SET_SIDEBAR_ON'
+    })
+  }
+}
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -38,12 +54,20 @@ export default {}
   font-size 14px
   background-color #0F99FE
   color white
+  .tab-item
+    width 40px
+    &>img
+      margin 5px auto
+      width 25px
+      vertical-align middle
   .main
     display flex
     width 225px
     .tab-item
       flex 1
       text-align center
+      &>img
+        width 35px
       .tab-link
         padding-bottom 5px
         color: $color-text-l

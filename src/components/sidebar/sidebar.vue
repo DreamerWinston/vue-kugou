@@ -1,13 +1,13 @@
 <template>
-<div>这是侧边栏</div>
+  <div class="sidebar">
+    我我我
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
-<style>
+<style scoped lang="stylus" rel="stylesheet/stylus">
 
 </style>

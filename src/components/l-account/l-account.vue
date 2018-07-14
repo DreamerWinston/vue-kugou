@@ -30,6 +30,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .lAccount
+  background-color white
   top 44px
   height 75px
   width 100%
@@ -56,6 +57,7 @@ export default {
       font-size 15px
     .nologin-content
       font-size 11px
+      color #919191
   .btns
     float left
     width 40%
