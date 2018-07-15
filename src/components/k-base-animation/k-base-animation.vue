@@ -9,7 +9,7 @@
 <script>
 export default {
   data () {
-      return {
+    return {
         transitionName: 'slide-left'
       }
     },
@@ -44,5 +44,5 @@ export default {
     transform: translate(-50px, 0);
   }
 
-  
+
 </style>

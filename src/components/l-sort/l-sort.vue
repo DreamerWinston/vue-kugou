@@ -2,7 +2,7 @@
   <div class="mSort">
     <div class="hint"></div>
     <div class="function">
-      <router-link tag="div" class="tab-item" to="/music">
+      <router-link tag="div" class="tab-item" to="/store">
         <div class="icon">
           <img src="./l_music.png" alt="">
         </div>

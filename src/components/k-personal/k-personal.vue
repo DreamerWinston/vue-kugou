@@ -1,6 +1,6 @@
 <template>
-  <div>
-    音乐圈
+  <div class="personal">
+    个人主界面
   </div>
 </template>
 

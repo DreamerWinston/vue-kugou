@@ -45,6 +45,7 @@ export default {
   right: 0
   bottom: 0
   height 65px
+  width 100%
   z-index: 150
   box-shadow: 0 2px 10px 4px #e5e5e5
   .playerview

@@ -1,20 +1,20 @@
 <template>
   <div id="app" :style="fullHeight">
-     <div id="main">
-        <transition name="fade">
-          <div class="sideview" v-show="sideBarOn" >
-            <sideBar class="sidebar"></sideBar>
-          </div>
-        </transition>
-        <div class="screen" :class="{fade:isFade,slide:isSlide}">
-          <tabbar v-on:childMethod="tran"></tabbar>
-          <keep-alive>
-            <router-view>
-            </router-view>
-          </keep-alive>
-          <playerBar :class="{fade:isFade,slide:isSlide}"></playerBar>
-        </div>
-     </div>
+    <div class="overlayer" @touchmove.prevent >
+    </div>
+    <transition name="fade">
+      <div class="sideview" v-show="sideBarOn" >
+        <sidebar class="sidebar"></sidebar>
+      </div>
+    </transition>
+    <div class="screen" :class="{fade:isFade,slide:isSlide}" :style="screenWidth,screenHeight">
+      <tabbar v-on:childMethod="tran"></tabbar>
+      <keep-alive>
+        <router-view>
+        </router-view>
+      </keep-alive>
+      <playerBar :class="{fade:isFade,slide:isSlide}"></playerBar>
+    </div>
   </div>
 </template>
 
@@ -23,14 +23,16 @@ import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 import tabbar from 'components/tabbar/tabbar'
 import playerBar from 'components/playerBar/playerBar'
-import sideBar from 'components/sideBar/sideBar'
+import sidebar from 'components/sidebar/sidebar'
 
 export default {
   data(){
     return{
       isFade:false,
-      isSlide:true,
-      fullHeight: 'height:'+document.documentElement.clientHeight+'px'
+      isSlide:false,
+      fullHeight: 'height:'+document.documentElement.clientHeight+'px',
+      screenWidth: 'width:'+document.documentElement.clientWidth+'px',
+      screenHeight: 'height:'+document.documentElement.clientHeight+'px'
     }
   },
   computed: {
@@ -40,8 +42,14 @@ export default {
   },
   methods:{
     tran(){
-      this.isFade=!this.isFade
-      this.isSlide=!this.isSlide
+      var scaleH = this.sideBarOn?200:0
+      var scaleW =this.sideBarOn?0.82:1
+
+      this.isFade=this.sideBarOn?true:false
+      this.isSlide=this.sideBarOn?false:true
+      this.screenWidth='width:'+(document.documentElement.clientWidth*scaleW)+'px',
+      this.screenHeight='height:'+(document.documentElement.clientHeight-scaleH)+'px'
+
     }
   },
    watch: {
@@ -62,13 +70,20 @@ export default {
         return (() => {
           window.fullHeight = document.documentElement.clientHeight
           that.fullHeight ='height:'+ window.fullHeight+'px'
+
+          var scaleH = that.sideBarOn?200:0
+          var scaleW =that.sideBarOn?0.82:1
+
+          that.screenWidth='width:'+(document.documentElement.clientWidth*scaleW)+'px',
+          that.screenHeight='height:'+(document.documentElement.clientHeight-scaleH)+'px'
+
         })()
       }
     },
   components: {
     tabbar,
     playerBar,
-    sideBar
+    sidebar
   },
 
 }
@@ -79,41 +94,57 @@ export default {
 #app
   width 100%
   position absolute
-  // min-width 320px
+  overflow hidden
+  min-width 375px
+  min-height 812px
+  width 100%
   // margin-bottom 0
   background-image url("./assets/bg.jpg")
   background-size cover
   background-repeat no-repeat
   background-position center
   background-attachment fixed
-
+  z-index -10
   .fade
-    animation: confirm-fadein 0.3s
+    animation: confirm-faderight 0.3s
     animation-fill-mode: forwards;
   .slide
-    animation: confirm-fadeout 0.3s
+    animation: confirm-fadeleft 0.3s
     animation-fill-mode: forwards;
   .sideview
     position absolute
-    margin-top -20%
     height 100%
     width 82%
-
- @keyframes confirm-fadein
+    z-index -8
+  .screen
+    background-color white
+    z-index 10
+    overflow hidden
+    width 100%
+  .overlayer
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background-color black
+    opacity 0.55
+    z-index:-9;
+ @keyframes confirm-faderight
     0%
       margin-top 0px
       margin-bottom 0px
       margin-left 0px
     100%
       margin-left 82%
-      margin-top 20%
-      margin-bottom 20%
+      margin-top 100px
+      margin-bottom 100px
 
-  @keyframes confirm-fadeout
+  @keyframes confirm-fadeleft
     0%
       margin-left 82%
-      margin-top 20%
-      margin-bottom 20%
+      margin-top 100px
+      margin-bottom 100px
     100%
       margin-top 0px
       margin-bottom 0px

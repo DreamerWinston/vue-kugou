@@ -1,5 +1,5 @@
 const state ={
-  sideBarOn: false
+  sideBarOn: false,
+  isLogin: false
 }
-
 export default state

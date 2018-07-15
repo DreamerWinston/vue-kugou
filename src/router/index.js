@@ -6,9 +6,28 @@ import listen from 'components/listen/listen'
 import watch from 'components/watch/watch'
 import sing from 'components/sing/sing'
 import search from 'components/search/search'
+
 import local from 'components/k-localmusic/k-localmusic'
+import love from 'components/k-lovemusic/k-lovemusic'
+import download from 'components/k-downloadmusic/k-downloadmusic'
+import history from 'components/k-historymusic/k-historymusic'
+
+import musicstore from 'components/k-musicstore/k-musicstore'
+import musiclist from 'components/k-musiclist/k-musiclist'
+import radio from 'components/k-musicradio/k-musicradio'
+import guess from 'components/k-musicguess/k-musicguess'
+import daily from 'components/k-musicdaily/k-musicdaily'
+import round from 'components/k-musicround/k-musicround'
+import recogn from 'components/k-musicrecogn/k-musicrecogn'
+
+import login from 'components/k-musicguess/k-musicguess'
+import message from 'components/k-musicmessage/k-musicmessage'
+
+
 import kBaseAni from 'components/k-base-animation/k-base-animation'
 import kBase from 'components/k-base-anim/k-base-anim'
+
+import personal from 'components/k-personal/k-personal'
 
 Vue.use(Router)
 
@@ -33,7 +52,6 @@ export default new Router({
         },
         {
           path: '/listen',
-          name: 'listen',
           component: kBaseAni,
           children: [
             {
@@ -45,6 +63,21 @@ export default new Router({
               path: '/local',
               name: 'local',
               component: local
+            },
+            {
+              path: '/love',
+              name: 'love',
+              component: love
+            },
+            {
+              path: '/downloads',
+              name: 'downloads',
+              component: download
+            },
+            {
+              path: '/history',
+              name: 'history',
+              component: history
             }
           ]
         },
@@ -62,8 +95,54 @@ export default new Router({
           path: '/search',
           name: 'search',
           component: search
-        }
+        },
+        {
+          path: '/personal',
+          name: 'personal',
+          component: personal
+        },
+        {
+          path: '/store',
+          name: 'store',
+          component: musicstore
+        },
+        {
+          path: '/musiclist',
+          name: 'musiclist',
+          component: musiclist
+        },
+        {
+          path: '/radio',
+          name: 'radio',
+          component: radio
+        },
+        {
+          path: '/guess',
+          name: 'guess',
+          component: guess
+        },
+        {
+          path: '/daily',
+          name: 'daily',
+          component: daily
+        },
+        {
+          path: '/round',
+          name: 'round',
+          component: round
+        },
+        {
+          path: '/recogn',
+          name: 'recogn',
+          component: recogn
+        },
+        {
+          path: '/message',
+          name: 'message',
+          component: message
+        },
       ]
     }
   ]
 })
+

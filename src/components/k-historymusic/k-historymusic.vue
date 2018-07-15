@@ -1,6 +1,6 @@
 <template>
-  <div class="love" >
-    <titlebar tname="喜欢·歌单"></titlebar>
+  <div class="history" >
+    <titlebar tname="最近"></titlebar>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-.love
+.history
   background-color white
   height 100%
   width 100%
