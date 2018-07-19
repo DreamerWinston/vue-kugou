@@ -13,6 +13,10 @@ const portfinder = require('portfinder')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
+const axios =require('axios')
+
+
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
@@ -22,6 +26,47 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
+    before(app){
+      app.get('/api/searchSong',(req, res) => {
+
+        var url = 'http://mobilecdnbj.kugou.com/api/v3/search/song'
+        axios.get(url, {
+        headers: {
+        referer: 'https://mobilecdnbj.kugou.com/',
+        host: 'mobilecdnbj.kugou.com'
+        },
+        params: req.query
+        })
+        .then((response) => {
+
+          res.json({
+            errno: 0,
+            data: response.data
+          })
+        })
+        .catch((e) => {
+          console.log(e)
+        });
+      });
+
+      app.get('/api/getSong',(req,res) => {
+        var url ='http://www.kugou.com/yy/index.php'
+        axios.get(url, {
+          params: req.query
+          })
+          .then((response) => {
+            console.log('在这里');
+            console.dir(response.data);
+            res.json({
+              errno: 0,
+              data: response.data
+            })
+          })
+          .catch((e) => {
+            console.log(e)
+          });
+      });
+    },
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [

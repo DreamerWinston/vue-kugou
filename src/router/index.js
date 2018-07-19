@@ -20,7 +20,7 @@ import daily from 'components/k-musicdaily/k-musicdaily'
 import round from 'components/k-musicround/k-musicround'
 import recogn from 'components/k-musicrecogn/k-musicrecogn'
 
-import login from 'components/k-musicguess/k-musicguess'
+import login from 'components/k-musiclogin/k-musiclogin'
 import message from 'components/k-musicmessage/k-musicmessage'
 
 
@@ -30,6 +30,11 @@ import kBase from 'components/k-base-anim/k-base-anim'
 import personal from 'components/k-personal/k-personal'
 
 Vue.use(Router)
+
+import axios from 'axios'
+import Vueaxios from 'vue-axios'
+
+Vue.use(Vueaxios, axios)
 
 Router.prototype.goBack = function () {
   this.isBacka = true
@@ -141,6 +146,11 @@ export default new Router({
           name: 'message',
           component: message
         },
+        {
+          path: '/login',
+          name: 'login',
+          component: login
+        }
       ]
     }
   ]
