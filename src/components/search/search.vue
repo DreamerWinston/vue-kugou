@@ -1,7 +1,7 @@
 <template>
   <div class="search">
     <div class="searchBar-warpper">
-      <searchBar ref="searchBox" @query="onQueryChange"></searchBar>
+      <searchBar ref="searchBox"  @query="onQueryChange"></searchBar>
     </div>
     <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
       <scroll>
@@ -59,10 +59,14 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .search
+  margin-top  -44px
+  .searchBar-warpper
+    height 44px
+    background-color #0F99FE
   .search-result
       position: fixed
       width: 100%
-      top: 178px
+      top: 120px
       bottom: 0
 
 </style>

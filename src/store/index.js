@@ -1,20 +1,35 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as actions from './actions'
-import * as getters from './getters'
-import state from './state'
-import mutations from './mutations'
-import createLogger from 'vuex/dist/logger'
+
+import Base from './module/base'
+import Player from './module/player'
 
 Vue.use(Vuex)
 
-const debug = process.env.NODE_ENV !== 'production'
+const store = new Vuex.Store({
+  state: {
+    allInfo: []
+  },
+  getters: {
+    getAllInfo: state => state.allInfo,
+    // 获取推荐歌单信息
+    getFindMusic: state => state.musicAllList.findmusic
+  },
+  mutations: {
+    setAllInfo (state, obj) {
+      state.allInfo = obj
+    }
+  },
+  actions: {
+    set_AllInfo ({ commit }, obj) {
+      commit('setAllInfo', obj)
+    }
+  },
 
-export default new Vuex.Store({
-  actions,
-  getters,
-  state,
-  mutations,
-  strict: debug,
-  plugins: debug ? [createLogger()] : []
+  modules: {
+    base:Base,
+    player:Player
+  }
 })
+
+export default store

@@ -1,21 +1,19 @@
 <template>
   <div class="player">
-       <!-- <progress-circle :radius="radius" :percent="percent">
-            <i @click.stop="togglePlaying" class="icon-mini" :class="miniIcon"></i>
-          </progress-circle> -->
-    <router-link tag="div" class="playerview" to="/playerDetail">
-      <div class="album">
-        <img src="./p_album_b.png" alt="">
+
+    <div class="playerview" >
+      <div class="album" @click="gotoNext">
+        <img :src="musicImage?musicImage:'static/p_album_b.png'" alt="">
       </div>
-      <div class="text">
-        <span class="music_name">老街</span>
-        <span class="music_author">李荣浩</span>
+      <div class="text" @click="gotoNext">
+        <span class="music_name" @click="gotoNext" >{{musicName}}</span>
+        <span class="music_author" @click="gotoNext">{{musicSinger}}</span>
       </div>
-      <div class="progress">
-        <progress-bar ></progress-bar>
+      <div class="progress" >
+        <progress-bar :percent="percent" ></progress-bar>
       </div>
-      <div class="control">
-        <img src="./p_pause.png" alt="">
+      <div class="control playpause" @click.stop="playpause">
+        <img :src="iconPlayPause?'static/p_pause.png':'static/p_play.png'" alt="">
       </div>
       <div class="control">
         <img src="./p_next.png" alt="">
@@ -23,18 +21,78 @@
       <div class="control">
         <img src="./p_queue.png" alt="">
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
 
 <script>
+import store from './../../store'
 import ProgressBar from '../../base/progress-bar/progress-bar'
 import ProgressCircle from '../../base/progress-circle/progress-circle'
+
+
 export default {
+  data () {
+			return {
+				audioInfo: {
+				},
+				myaudio: {},
+				state: {
+					isplaying: false,
+					loading: false,
+					currentIndex: 0
+				}
+			}
+		},
+  computed: {
+
+      percent() {
+        return this.$store.getters.getCurrentTime / this.$store.getters.getMusicDuration
+      },
+      iconPlayPause () {
+				return this.$store.getters.getIsPlaying
+			},
+			// 获取音乐名称
+			musicName () {
+				return this.$store.getters.getCurrentSong ? this.$store.getters.getCurrentSong.song_name : ''
+			},
+			// 获取歌手名称
+			musicSinger () {
+				return this.$store.getters.getCurrentSong ? this.$store.getters.getCurrentSong.author_name : ''
+			},
+			// 获取音乐封面地址
+			musicImage () {
+				return this.$store.getters.getCurrentSong ? this.$store.getters.getCurrentSong.img : ''
+			},
+			// 获取音乐播放地址
+			musicUrl () {
+				return this.$store.getters.getCurrentSong ? this.$store.getters.getCurrentSong.play_url : ''
+			}
+    },
+    mounted () {
+      // 所有的audio的 vuex 的状态信息
+			this.audioInfo = this.$store.state.player
+			// 音乐是否play
+			this.state.isplaying = this.audioInfo.isPlaying
+		},
   components: {
     ProgressBar,
     ProgressCircle
-  }
+  },
+  methods: {
+
+     playpause () {
+				store.commit('togglePlay')
+      },
+        playNext () {
+				store.dispatch('play_Next')
+			},
+    gotoNext(){
+      this.$router.push({
+       path:'/musicDetail'
+     })
+    }
+  },
 }
 </script>
 
@@ -64,7 +122,9 @@ export default {
       margin-left 10px
       float left
       &>img
+        border-radius: 50%
         height 70px
+        animation: rotate 10s linear infinite
     .text
       width 50%
       display: flex
@@ -88,4 +148,10 @@ export default {
       &>img
         width 30px
 
+
+  @keyframes rotate
+    0%
+      transform: rotate(0)
+    100%
+      transform: rotate(360deg)
 </style>

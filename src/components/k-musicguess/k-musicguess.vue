@@ -1,15 +1,23 @@
 <template>
-  <div>
-    猜你喜欢
+  <div class="guess" >
+    <titlebar tname="猜你喜欢"></titlebar>
   </div>
 </template>
 
 <script>
-export default {
+import titlebar from 'components/k-titlebar/k-titlebar'
 
+export default {
+  components: {
+    titlebar
+  }
 }
 </script>
 
-<style>
-
+<style scoped lang="stylus" rel="stylesheet/stylus">
+.guess
+  background-color white
+  height 100%
+  width 100%
+  margin-top -44px
 </style>

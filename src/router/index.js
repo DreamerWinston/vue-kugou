@@ -29,6 +29,8 @@ import kBase from 'components/k-base-anim/k-base-anim'
 
 import personal from 'components/k-personal/k-personal'
 
+import musicdetail from 'components/musicdetail/musicdetail'
+
 Vue.use(Router)
 
 import axios from 'axios'
@@ -150,9 +152,15 @@ export default new Router({
           path: '/login',
           name: 'login',
           component: login
+        },
+        {
+          path: '/musicdetail',
+          name: 'musicdetail',
+          component: musicdetail
         }
       ]
-    }
+    },
+
   ]
 })
 

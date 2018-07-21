@@ -15,7 +15,7 @@ const PORT = process.env.PORT && Number(process.env.PORT)
 
 const axios =require('axios')
 
-
+const fs =require('fs');
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -26,7 +26,16 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
+
     before(app){
+      // 本地音乐逻辑
+      // fs.mkdir('./music',function(err){
+      //   if(err){
+
+      //   }
+      //   console.log('成功');
+      // })
+
       app.get('/api/searchSong',(req, res) => {
 
         var url = 'http://mobilecdnbj.kugou.com/api/v3/search/song'
@@ -38,7 +47,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         params: req.query
         })
         .then((response) => {
-
           res.json({
             errno: 0,
             data: response.data
@@ -55,8 +63,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           params: req.query
           })
           .then((response) => {
-            console.log('在这里');
-            console.dir(response.data);
+
             res.json({
               errno: 0,
               data: response.data

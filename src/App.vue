@@ -14,6 +14,13 @@
         </router-view>
       </keep-alive>
       <playerBar :class="{fade:isFade,slide:isSlide}"></playerBar>
+      <audio id="myaudio" ref="audio"  @timeupdate="musicTimeUpdate"
+                          @canplay="musicCanPlay"
+                          @playing="musicOnPlaying"
+                          @ended="musicEnded"
+                          @waiting="musicOnWaiting"
+                          @pause="musicOnPause"
+                          @loadstart="loadStart"></audio>
     </div>
   </div>
 </template>
@@ -24,6 +31,7 @@ import {mapGetters, mapMutations, mapActions} from 'vuex'
 import tabbar from 'components/tabbar/tabbar'
 import playerBar from 'components/playerBar/playerBar'
 import sidebar from 'components/sidebar/sidebar'
+import store from './store'
 
 export default {
   data(){
@@ -32,7 +40,7 @@ export default {
       isSlide:false,
       fullHeight: 'height:'+document.documentElement.clientHeight+'px',
       screenWidth: 'width:'+document.documentElement.clientWidth+'px',
-      screenHeight: 'height:'+document.documentElement.clientHeight+'px'
+      screenHeight: 'height:'+document.documentElement.clientHeight+'px',
     }
   },
   computed: {
@@ -50,7 +58,83 @@ export default {
       this.screenWidth='width:'+(document.documentElement.clientWidth*scaleW)+'px',
       this.screenHeight='height:'+(document.documentElement.clientHeight-scaleH)+'px'
 
-    }
+    },
+    musicEnded () {
+      store.dispatch('play_Ended')
+      // 歌词初始化
+      musicLrcIndex = 0
+      store.commit({
+        type: 'setLyricIndex',
+        index: 0
+      })
+    },
+    // 音乐播放时间更新事件
+    musicTimeUpdate () {
+      store.dispatch({
+        type: 'set_CurrentTime',
+        time: Math.floor(this.$refs.audio.currentTime)
+      })
+
+      // 设置歌词内容(以索引的形式显示,主要是)
+      // let musicLrc = store.getters.getCurrentMusic.lyric
+      // let currentTime = Math.floor(this.$refs.audio.currentTime)
+      // if (musicLrc[musicLrcIndex] === undefined) return
+      // if (musicLrc.length === 0) {
+      //   store.commit({
+      //     type: 'setLyricIndex',
+      //     index: -1
+      //   })
+      //   return
+      // }
+      // for (let i = 0; i < musicLrc.length; i++) {
+      //     if (currentTime >= Number(musicLrc[musicLrcIndex].timeId)) {
+      //       musicLrcIndex += 1
+      //       // return
+      //       break
+      //     } else {
+      //       if (musicLrcIndex <= 0) {
+      //         musicLrcIndex = 0
+      //       } else {
+      //         musicLrcIndex--
+      //       }
+      //     }
+      // }
+        // store.commit({
+        //   type: 'setLyricIndex',
+        //   index: musicLrcIndex
+        // })
+    },
+    // 可以播放事件
+    musicCanPlay () {
+      store.dispatch({
+        type: 'set_MusicDuration',
+        duration: Math.floor(this.$refs.audio.duration)
+      })
+      store.commit({
+        type: 'setMusicLoadStart',
+        isloadstart: false
+      })
+    },
+    // 音乐处于播放状态
+    musicOnPlaying () {
+      store.commit('play')
+    },
+    // 音乐处于watting状态
+    musicOnWaiting () {
+      // alert('音乐加载中')
+    },
+    // 音乐处于暂停状态
+    musicOnPause () {
+      store.commit('pause')
+    },
+    // 音乐加载
+    loadStart () {
+      store.commit({
+        type: 'setMusicLoadStart',
+        isloadstart: true
+      })
+    },
+
   },
    watch: {
       fullHeight (val) {
@@ -79,6 +163,15 @@ export default {
 
         })()
       }
+    },
+    created(){
+
+      setTimeout(() => {
+       store.commit({type:'initPlayer'})
+      store.dispatch('set_AudioElement', this.$refs.audio)
+
+      }, 0);
+
     },
   components: {
     tabbar,

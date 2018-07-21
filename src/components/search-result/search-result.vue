@@ -17,7 +17,6 @@
         <div class="more"></div>
       </li>
     </ul>
-  <audio ref="audio" :src="current_song_url"></audio>
   </scroll>
 </template>
 
@@ -26,6 +25,7 @@ import {requestSearchSong} from 'api/search'
 import scroll  from 'base/scroll/scroll'
 import {ERR_OK} from 'api/config'
 import {requestSongWithHash} from 'api/song'
+import store from '../../store'
 
 export default {
   props: {
@@ -44,7 +44,6 @@ export default {
         beforeScroll: true,
         hasMore: true,
         result: [],
-        current_song_url: ''
       }
   },
   watch: {
@@ -64,26 +63,20 @@ export default {
         this.hasMore = true
         this.$refs.searchResult.scrollTo(0, 0)
         requestSearchSong(this.query, this.page, 10).then((res) => {
-          console.log("啦啦啦阿拉");
-          console.log(res.data);
           if (res.errno === ERR_OK) {
-            console.log("在这里11");
             this.result=this._setupData(res.data.data.info)
-
           }
         })
       },
       selectItem(item){
 
-
-
          requestSongWithHash(item.hash).then((res)=>{
            this.current_song_url=res.data.data.play_url
-            console.log(res.data.data.play_url);
-             const audio = this.$refs.audio
-        this.$nextTick(() => {
-            audio.play()
-        })
+           store.commit({
+             type:'playMusic',
+             data:res.data.data
+           });
+           store.dispatch('set_LocalData')
          })
       },
       searchMore() {

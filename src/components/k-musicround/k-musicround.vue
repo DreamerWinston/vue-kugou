@@ -1,15 +1,23 @@
 <template>
-  <div>
-    音乐圈
+  <div class="round" >
+    <titlebar tname="音乐圈"></titlebar>
   </div>
 </template>
 
 <script>
-export default {
+import titlebar from 'components/k-titlebar/k-titlebar'
 
+export default {
+  components: {
+    titlebar
+  }
 }
 </script>
 
-<style>
-
+<style scoped lang="stylus" rel="stylesheet/stylus">
+.round
+  background-color white
+  height 100%
+  width 100%
+  margin-top -44px
 </style>
