@@ -115,7 +115,7 @@ export default {
     .progress
       position absolute
       width 75%
-      margin-left 20%
+      margin-left 92px
       margin-top -20px
     .album
       margin-top -10px
